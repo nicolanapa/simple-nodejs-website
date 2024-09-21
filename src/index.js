@@ -50,7 +50,7 @@ const server = http.createServer(async (req, res) => {
                     otherResourceReturner(req, res);
                 } else {
                     return404(req, res, "text/css");
-                    res.write("");
+                    res.write("* {  file: notFound  };");
                     res.end();
                 }
             } else {
