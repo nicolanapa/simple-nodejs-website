@@ -23,23 +23,22 @@ const page404 = async (req, res) => {
     }
 };
 
+const normalProjectReturner = async (req, res) => {
+    //console.log(__dirname + "/project" + req.url);
+    let finalPath = req.url === "/" ? "/index.html" : req.url + ".html";
+    //console.log(finalPath);
+    let file = await fs.readFile(__dirname + "/project" + finalPath);
+    res.write(file);
+};
+
 const server = http.createServer(async (req, res) => {
     console.log(req.method, req.url);
 
     try {
         if (req.method === "GET") {
-            if (req.url === "/") {
+            if (req.url === "/" || req.url === "/about" || req.url === "/contact-me") {
                 return200(req, res);
-                let file = await fs.readFile(__dirname + "/project/index.html");
-                res.write(file);
-            } else if (req.url === "/about") {
-                return200(req, res);
-                let file = await fs.readFile(__dirname + "/project/about.html");
-                res.write(file);
-            } else if (req.url === "/contact-me") {
-                return200(req, res);
-                let file = await fs.readFile(__dirname + "/project/contact-me.html");
-                res.write(file);
+                normalProjectReturner(req, res);
             } else {
                 return404(req, res);
                 page404(req, res);
@@ -49,7 +48,7 @@ const server = http.createServer(async (req, res) => {
             page404(req, res);
         }
     } catch (error) {
-        console.log("Couldn't load webpage:", error);
+        console.log("Couldn't load webpage:", req.url, "with ERROR", error);
     }
 
     res.end();
