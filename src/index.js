@@ -30,8 +30,15 @@ const server = http.createServer(async (req, res) => {
         if (req.method === "GET") {
             if (req.url === "/") {
                 return200(req, res);
-
                 let file = await fs.readFile(__dirname + "/project/index.html");
+                res.write(file);
+            } else if (req.url === "/about") {
+                return200(req, res);
+                let file = await fs.readFile(__dirname + "/project/about.html");
+                res.write(file);
+            } else if (req.url === "/contact-me") {
+                return200(req, res);
+                let file = await fs.readFile(__dirname + "/project/contact-me.html");
                 res.write(file);
             } else {
                 return404(req, res);
