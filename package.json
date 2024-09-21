@@ -7,7 +7,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "git": "git subtree push --prefix dist origin gh-pages",
-        "startWatch": "node --watch index.js"
+        "startWatch": "node --watch ./src/index.js"
     },
     "keywords": [],
     "author": "",
