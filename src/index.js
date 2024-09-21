@@ -38,14 +38,14 @@ const server = http.createServer(async (req, res) => {
         if (req.method === "GET") {
             if (req.url === "/" || req.url === "/about" || req.url === "/contact-me") {
                 return200(req, res);
-                normalProjectReturner(req, res);
+                await normalProjectReturner(req, res);
             } else {
                 return404(req, res);
-                page404(req, res);
+                await page404(req, res);
             }
         } else {
             return404(req, res);
-            page404(req, res);
+            await page404(req, res);
         }
     } catch (error) {
         console.log("Couldn't load webpage:", req.url, "with ERROR", error);
