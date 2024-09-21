@@ -1,10 +1,35 @@
-.main {
+* {
+    font-family: sans-serif, serif, system-ui;
+}
+
+main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    margin-top: 15%;
+    max-height: 500px;
+}
+
+main div {
+    box-shadow: 0px 0px 20px 25px rgb(255, 233, 233);
+    background-color: rgb(255, 233, 233);
+    border-radius: 10px;
+    padding: 25px;
 }
 
 h1 {
     color: red;
+    font-weight: 800;
+}
+
+p {
+    font-weight: 400;
+    font-size: larger;
+}
+
+a:link,
+a:visited {
+    color: rgb(59, 150, 173);
+    font-weight: 600;
+    text-decoration: none;
 }
