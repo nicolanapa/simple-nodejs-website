@@ -45,7 +45,7 @@ const server = http.createServer(async (req, res) => {
                 return200(req, res);
                 await normalProjectReturner(req, res);
             } else if (req.url.substring(0, 8) === "/styles/") {
-                if (req.url === "/styles/404.css") {
+                if (req.url === "/styles/style.css" || req.url === "/styles/404.css") {
                     return200(req, res, "text/css");
                     otherResourceReturner(req, res);
                 } else {
