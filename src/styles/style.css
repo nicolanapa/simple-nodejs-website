@@ -16,3 +16,8 @@
     padding: 10px;
     margin-top: 20px;
 }
+
+a:link,
+a:visited {
+    color: rgb(75, 0, 0);
+}
