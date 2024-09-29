@@ -2,6 +2,7 @@ import http from "http";
 import fs from "fs/promises";
 import url from "url";
 import path from "path";
+import express from "express";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,6 +37,22 @@ const otherResourceReturner = async (req, res) => {
     res.end();
 };
 
+const app = express();
+
+app.all("", (req, res) => {
+    console.log(req.method, req.url, req.headers.accept);
+});
+
+app.get(["/", "/about", "/contact-me"], async (req, res) => {
+    return200(req, res);
+    await normalProjectReturner(req, res);
+});
+
+app.get(["/style.css", "/styles/404.css"], async (res, req) => {
+    return200(req, res, "text/css");
+    await otherResourceReturner(req, res);
+});
+
 const server = http.createServer(async (req, res) => {
     console.log(req.method, req.url, req.headers.accept);
 
@@ -47,7 +64,7 @@ const server = http.createServer(async (req, res) => {
             } else if (req.url.substring(0, 8) === "/styles/") {
                 if (req.url === "/styles/style.css" || req.url === "/styles/404.css") {
                     return200(req, res, "text/css");
-                    otherResourceReturner(req, res);
+                    await otherResourceReturner(req, res);
                 } else {
                     return404(req, res, "text/css");
                     res.write("* {  file: notFound  };");
@@ -66,4 +83,5 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-server.listen(8080);
+//server.listen(8080);
+app.listen(8080);
