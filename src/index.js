@@ -1,4 +1,4 @@
-import http from "http";
+//import http from "http";
 import fs from "fs/promises";
 import url from "url";
 import path from "path";
@@ -42,28 +42,35 @@ const normalProjectReturner = async (req, res) => {
     res.end();
 };
 
-const otherResourceReturner = async (req, res) => {
-    console.log(__dirname + req.url);
+/*const otherResourceReturner = async (req, res) => {
+    //console.log(__dirname + req.url);
     let file = await fs.readFile(__dirname + req.url);
     //res.write(file);
     res.send(file);
     res.end();
-};
+};*/
 
 const app = express();
+
+app.use(async (req, res, next) => {
+    console.log(req.method, req.url, req.headers.accept);
+    next();
+});
+
+app.use("/styles", express.static(path.join(__dirname + "/styles")));
+app.use("/styles", express.static(path.join(__dirname + "/project")));
 
 app.get(["/", "/about", "/contact-me"], async (req, res) => {
     returnCode(req, res);
     await normalProjectReturner(req, res);
 });
 
-app.get(["/style.css", "/styles/404.css"], async (res, req) => {
-    returnCode(req, res, "text/css");
+/*app.get(["/style.css", "/styles/404.css"], async (req, res) => {
+    returnCode(req, res, 200, "text/css");
     await otherResourceReturner(req, res);
-});
+});*/
 
-app.get("(.*)", async (req, res) => {
-    console.log("404!!!!");
+app.use(async (req, res) => {
     returnCode(req, res, 404);
     await page404(req, res);
 });
